@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="MobileOptimized" content="320" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+<!--<meta name="viewport" content="width=device-width, user-scalable=no ,target-densitydpi=device-dpi ,initial-scale= 0.5"/>--><!--IOS对target-densitydpi不支持，所以我们只能设置 initial-scale=0.5 直接让iphone页面缩小一半。-->
+<!--<meta name="viewport" content="width=640, user-scalable=0"/>-->
+<meta name="description" content="" />
+<meta name="author" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="mobile-web-app-status-bar-style" content="black" />
+<meta name="apple-touch-fullscreen" content="yes"/>
+<meta name="touch-fullscreen" content="yes"/>
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="Images/apple-touch-icon-114x114-smartone.png" />
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="Images/apple-touch-icon-72x72-smartone.png" />
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="Images/apple-touch-icon-57x57-smartone.png" />
+<link rel="shortcut icon" href="Images/apple-touch-icon-smartone.png" />
+<link rel="apple-touch-startup-image" href="Images/startup.png"><!--全屏启动时候的启动画面图像, 尺寸320X460 px-->
+<title>list by group </title>
+
+
+<style type="text/css">
+*{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	outline: none;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}/***用于demo**/
+ul{list-style:none;}
+body,html{-webkit-overflow-scrolling: touch; -webkit-tap-highlight-color: rgba(0,0,0,0);}
+
+html {
+	/*-ms-touch-action: none;*/
+}
+
+body{
+	font-size: 12px;
+	font-family: ubuntu, helvetica, arial;
+	overflow: hidden; /* this is important to prevent the whole page to bounce */
+}
+#main {	
+	height:100%; width:100%;
+	position:absolute;
+	overflow:hidden;
+}
+
+
+
+
+#listGroupedBox {
+	position:absolute;/***必須要absolute***/
+	width:100%; 
+	margin: 0 auto;
+	background: #444;
+	z-index:1;
+	top:0px;/***必須要***/
+	bottom:0px;/***必須要***/
+}
+
+#listGroupedScroller, #listGroupedSelectScroller {
+	width:100%;
+	position: absolute;
+	z-index: 1;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	height: auto;
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	-o-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	-o-text-size-adjust: none;
+	text-size-adjust: none;
+	background-color: #444;
+}
+
+
+@media only screen and (min-width:320px){
+	
+}
+@media only screen and (min-width:480px){
+	
+}
+@media only screen and (min-width:640px){
+	
+}
+@media only screen and (min-width:800px){
+}
+@media only screen and (min-width:1024px){
+}
+
+/* Clear Fix */
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	/*display: inline-block;*/
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+.listGroupedBox-group{
+	padding:5px 0px;
+	background-color:#fff;	
+}
+.listGroupedBox-group:first-child{
+	padding-top:0px;
+}
+.group-title{
+	padding:12px 10px;
+	background-color:#0071C1;
+	color:#fff;
+}
+.group-content{
+	display:block;
+}
+.group-content li{
+	padding:10px 10px;
+	border-bottom:1px #ccc solid;
+	display:block;
+}
+.group-content li:last-child{
+	border-bottom:none;
+}
+
+#listGroupedSelectBox{
+	position:absolute;
+	right:0px;
+	top:1%;
+	z-index:999999;
+	width:30px;
+	color:#fff;
+	height:98%;
+	background-color:rgba(0, 0, 0, 0.56);
+	text-align:center;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+}
+#listGroupedSelectScroller{
+	z-index:999999;
+	background:none;
+}
+.listGroupedSelectBox-item{
+	display:block;
+	padding:2px 0px;
+	font-size:12px;
+	cursor:pointer;
+}
+
+#listGroupedSelectTips{
+	position:absolute;
+	z-index:999999;
+	background-color:rgba(0, 0, 0, 0.66);
+	color:#fff;
+	font-size:22px;
+	width:40px;
+	height:40px;
+	line-height:40px;
+	text-align:center;
+}
+
+</style>
+<script src="JS_V3/prototype1.7.1.js"></script>
+<script src="JS_V3/iscroll.js"></script>
+</head>
+<body>
+<div id="main">
+    <div id="listGroupedBox">
+        <div id="listGroupedScroller">
+            <div class="listGroupedBox-group" id="group_A">
+                <div class="group-title">A</div> 
+                <ul class="group-content">
+                    <li>Aeofy dfle dfdef efd</li><li>Aeofy dfle</li><li>Aeofy dfle</li><li>Aeofy dfle</li><li>Aeofy dfle</li>
+                </ul>
+            </div>
+            <div class="listGroupedBox-group" id="group_B">
+                <div class="group-title">B</div> 
+                <ul class="group-content">
+                    <li>Beofy dfle</li><li>Beofy dfle</li><li>Beofy dfle</li><li>Beofy dfle</li><li>Beofy dfle</li>
+                </ul>
+            </div>
+            <div class="listGroupedBox-group" id="group_C">
+                <div class="group-title">C</div> 
+                <ul class="group-content">
+                    <li>Ceofy dfle</li><li>Ceofy dfle</li><li>Ceofy dfle</li><li>Ceofy dfle</li><li>Ceofy dfle</li>
+                </ul>
+            </div>
+            <div class="listGroupedBox-group" id="group_D">
+                <div class="group-title">D</div> 
+                <ul class="group-content">
+                    <li>Deofy dfle</li><li>Deofy dfle</li><li>Deofy dfle</li><li>Deofy dfle</li><li>Deofy dfle</li>
+                </ul>
+            </div>	
+            <div class="listGroupedBox-group" id="group_E">
+                <div class="group-title">E</div> 
+                <ul class="group-content">
+                    <li>Eeofy dfle</li><li>Eeofy dfle</li><li>Eeofy dfle</li><li>Eeofy dfle</li><li>Eeofy dfle</li>
+                </ul>
+            </div>	
+            
+            
+            
+            
+            
+            
+            <div class="listGroupedBox-group" id="group_R">
+                <div class="group-title">R</div> 
+                <ul class="group-content">
+                    <li>Reofy dfle</li><li>Reofy dfle</li><li>Reofy dfle</li><li>Reofy dfle</li><li>Reofy dfle</li>
+                </ul>
+            </div>	
+            <div class="listGroupedBox-group" id="group_S">
+                <div class="group-title">S</div> 
+                <ul class="group-content">
+                    <li>Seofy dfle</li><li>Seofy dfle</li><li>Seofy dfle</li><li>Seofy dfle</li><li>Seofy dfle</li>
+                </ul>
+            </div>		
+            <div class="listGroupedBox-group" id="group_T">
+                <div class="group-title">T</div> 
+                <ul class="group-content">
+                    <li>Teofy dfle</li><li>Teofy dfle</li><li>Teofy dfle</li><li>Teofy dfle</li><li>Teofy dfle</li>
+                </ul>
+            </div>		
+            <div class="listGroupedBox-group" id="group_W">
+                <div class="group-title">W</div> 
+                <ul class="group-content">
+                    <li>Weofy dfle</li><li>Weofy dfle</li><li>Weofy dfle</li><li>Weofy dfle</li><li>W dfle</li>
+                </ul>
+            </div>		
+            <div class="listGroupedBox-group" id="group_Z">
+                <div class="group-title">Z</div> 
+                <ul class="group-content">
+                    <li>Z dfle</li><li>Z dfle</li><li>Z dfle</li><li>Z dfle</li><li>Z dfle</li>
+                </ul>
+            </div>			
+        </div>
+    </div>
+    <div id="listGroupedSelectBox">
+    <div id="listGroupedSelectScroller">
+        <span class="listGroupedSelectBox-item">A</span>
+        <span class="listGroupedSelectBox-item">B</span>
+        <span class="listGroupedSelectBox-item">C</span>
+        <span class="listGroupedSelectBox-item">D</span>
+        <span class="listGroupedSelectBox-item">E</span>
+        <span class="listGroupedSelectBox-item">F</span>
+        <span class="listGroupedSelectBox-item">G</span>
+        <span class="listGroupedSelectBox-item">H</span>
+        <span class="listGroupedSelectBox-item">I</span>
+        <span class="listGroupedSelectBox-item">J</span>
+        <span class="listGroupedSelectBox-item">K</span>
+        <span class="listGroupedSelectBox-item">L</span>
+        <span class="listGroupedSelectBox-item">M</span>
+        <span class="listGroupedSelectBox-item">N</span>
+        <span class="listGroupedSelectBox-item">O</span>
+        <span class="listGroupedSelectBox-item">P</span>
+        <span class="listGroupedSelectBox-item">Q</span>
+        <span class="listGroupedSelectBox-item">R</span>
+        <span class="listGroupedSelectBox-item">S</span>
+        <span class="listGroupedSelectBox-item">T</span>
+        <span class="listGroupedSelectBox-item">U</span>
+        <span class="listGroupedSelectBox-item">V</span>
+        <span class="listGroupedSelectBox-item">W</span>
+        <span class="listGroupedSelectBox-item">X</span>
+        <span class="listGroupedSelectBox-item">Y</span>
+        <span class="listGroupedSelectBox-item">Z</span>
+    </div>
+    </div>
+    
+    <div id="listGroupedSelectTips" style="display:none;">
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+
+var listGroupedScroll;
+var listGroupedSelectScroll;
+function loaded () {
+	listGroupedScroll = new IScroll('#listGroupedBox', {
+		scrollX: false,
+		scrollY: true,
+		scrollbars: true,
+		mouseWheel: true,
+		interactiveScrollbars: true,
+		shrinkScrollbars: 'scale',
+		fadeScrollbars: true
+	});
+	listGroupedSelectScroll =  new IScroll('#listGroupedSelectBox', {
+		scrollX: false,
+		scrollY: true,
+		tap: true 
+	});
+}
+
+window.onload=function(){
+	loaded();
+}
+
+var aryListGroup=$$('.listGroupedSelectBox-item');
+var loopNum=aryListGroup.length;
+
+for(var i=0; i<loopNum; i++){
+	aryListGroup[i].observe('tap',function(event){
+		//console.log(Event.element(event).innerHTML);
+		var node=Event.element(event);
+		var s=node.innerHTML;
+		if($('group_'+s)){
+			listGroupedScroll.scrollToElement($('group_'+s),200,0,5);
+		}
+		var offset=node.viewportOffset();
+		showGroupSelectTips(offset.left,offset.top,s);
+		setTimeout(hideGroupSelectTips,300);
+	});
+	aryListGroup[i].observe('touchmove',function(event){
+		//console.log(Event.element(event).innerHTML);
+		var node=Event.element(event);
+		var s=node.innerHTML;
+		//alert('move'+s);
+		if($('group_'+s)){
+			listGroupedScroll.scrollToElement($('group_'+s),50,0,5);
+		}
+		var offset=node.viewportOffset();
+		showGroupSelectTips(offset.left,offset.top,s);
+		setTimeout(hideGroupSelectTips,300);
+	});
+	aryListGroup[i].observe('mousemove',function(event){
+		//console.log(Event.element(event).innerHTML);
+		var node=Event.element(event);
+		var s=node.innerHTML;
+		if($('group_'+s)){
+			listGroupedScroll.scrollToElement($('group_'+s),200,0,5);
+		}
+		var offset=node.viewportOffset();
+		showGroupSelectTips(offset.left,offset.top,s);
+	});
+}
+function showGroupSelectTips(x,y,s){
+		$('listGroupedSelectTips').setStyle({'left':x-50+'px','top':y-10+'px'});
+		$('listGroupedSelectTips').show();
+		$('listGroupedSelectTips').update(s);	
+}
+$('listGroupedSelectBox').observe('mouseout',function(){
+	//setTimeout(hideGroupSelectTips,300);
+	hideGroupSelectTips();
+});
+function hideGroupSelectTips(){
+	$('listGroupedSelectTips').hide();
+}
+//document.getElementById('listGroupedSelectBox').addEventListener('touchmove', function (e) { e.preventDefault(); return; }, false);
+//document.getElementById('listGroupedSelectBox').addEventListener('mousemove', function (e) { e.preventDefault(); return; }, false);
+
+//document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+</script>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="MobileOptimized" content="320" />
+<!--<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />-->
+<!--<meta name="viewport" content="width=device-width, user-scalable=no ,target-densitydpi=device-dpi ,initial-scale= 0.5"/>--><!--IOS对target-densitydpi不支持，所以我们只能设置 initial-scale=0.5 直接让iphone页面缩小一半。-->
+<meta name="viewport" content="width=640, user-scalable=0"/>
+<meta name="description" content="" />
+<meta name="author" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="mobile-web-app-status-bar-style" content="black" />
+<meta name="apple-touch-fullscreen" content="yes"/>
+<meta name="touch-fullscreen" content="yes"/>
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="Images/apple-touch-icon-114x114-smartone.png" />
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="Images/apple-touch-icon-72x72-smartone.png" />
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="Images/apple-touch-icon-57x57-smartone.png" />
+<link rel="shortcut icon" href="Images/apple-touch-icon-smartone.png" />
+<link rel="apple-touch-startup-image" href="Images/startup.png"><!--全屏启动时候的启动画面图像, 尺寸320X460 px-->
+<title>SmarTone</title>
+<link rel="stylesheet" type="text/css" href="CSS_V3/reset.css">
+<link rel="stylesheet" type="text/css" href="CSS_V3/base.css">
+<link rel="stylesheet" type="text/css" href="CSS_V3/main.css">
+
+<script src="JS_V3/modernizr.js"></script>
+<script src="JS_V3/ga.js"></script>
+<script data-main="JS_V3/main" src="JS_V3/require.js"></script>
+
+</head>
+
+<body>
+<div class="clearfix" id="topMenuBar">
+	<img src="Images/st_logo.png" id="stLogo" alt="smartone" />
+    <div id="topLangBt">
+    	<img src="Images/top_lang_bt.png">
+    </div>
+    <div id="topAccountBt">
+    	<img src="Images/top_account_bt.png">
+    </div>
+    <div id="topMenuBt">
+    	<img src="Images/top_menu_bt.png" id="topMenuBtImg">
+        <div id="topMenuBtOnBg" style="display:none;">&nbsp; </div>
+    </div>
+</div>
+
+<div id="bodyContent">
+<div id="topBanner">
+<img src="Images/b1.png">
+</div>
+</div>
+
+
+<!--top menu show begin-->
+<div id="topMenuShow" style="display:none;">
+    <div class="topMenuShow-top">
+        <div class="topMenuShow-searchBox">
+            <form action="#" method="get" id="searchForm">
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tbody>
+            <tr>
+                <td>
+                    <input type="text" id="searchInput" placeholder="Search" />
+                </td>
+                <td width="74">
+                    <input type="image" src="Images/search_bt.png" id="searchFormSubmit" />
+                </td>
+            </tr>
+            </tbody>
+            </table>
+            </form>
+        </div>
+        
+        <div class="menuListBox">
+            <div class="item" id="topMenuListHome"><img src="Images/home_icon.png"> Home</div>
+            <div class="item" id="topMenuListHandset"><span>Mobiles & Price Plans</span></div>
+            <div class="item" id="topMenuListServicesApps"><span>Mobiles & Price Plans</span></div>
+            <div class="item" id="topMenuListHomePhonePlus"><span>HomePhone+</span></div>
+            <div class="item" id="topMenuListPrivilegesSupport"><span>Privileges and Support</span></div>
+        </div>
+    </div>
+    
+    <div class="topMenuShow-bottom"></div>
+    
+</div>
+<!--top menu show end-->
+<div id="maskLayout" style="display:none;"></div>
+</body>
+
+</html>

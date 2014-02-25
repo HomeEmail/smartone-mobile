@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="MobileOptimized" content="320" />
+<!--<meta name="viewport" content="width=640, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />-->
+<!--<meta name="viewport" content="width=device-width, user-scalable=no ,target-densitydpi=device-dpi ,initial-scale= 0.5"/>--><!--IOS对target-densitydpi不支持，所以我们只能设置 initial-scale=0.5 直接让iphone页面缩小一半。-->
+<meta name="viewport" content="width=640, user-scalable=0"/>
+<meta name="description" content="" />
+<meta name="author" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="mobile-web-app-status-bar-style" content="black" />
+<meta name="apple-touch-fullscreen" content="yes"/>
+<meta name="touch-fullscreen" content="yes"/>
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="Images/apple-touch-icon-114x114-smartone.png" />
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="Images/apple-touch-icon-72x72-smartone.png" />
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="Images/apple-touch-icon-57x57-smartone.png" />
+<link rel="shortcut icon" href="Images/apple-touch-icon-smartone.png" />
+<link rel="apple-touch-startup-image" href="Images/startup.png"><!--全屏启动时候的启动画面图像, 尺寸320X460 px-->
+<title>ST front desk </title>
+<link rel="stylesheet" type="text/css" href="CSS_V3/reset.css">
+<link rel="stylesheet" type="text/css" href="CSS_V3/base.css">
+<style type="text/css">
+body,html{-webkit-tap-highlight-color: rgba(0,0,0,0);}
+
+html {
+	/*-ms-touch-action: none;*/
+}
+
+body {
+	font-size: 12px;
+	font-family: ubuntu, helvetica, arial;
+	overflow: hidden; /* this is important to prevent the whole page to bounce */
+}
+#body{
+	width:640px;
+	height:100%;
+	position:relative;
+	overflow: hidden;
+}
+
+@media only screen and (min-width:320px){
+}
+@media only screen and (min-width:480px){
+	/*#scroller { height:315px; width: 1920px;}
+	.slide,#wrapper,#bannerSlideBox {height:315px; max-width:480px;}
+	.slide img{}*/
+}
+@media only screen and (min-width:640px){
+	/*#scroller { height:420px; width: 2560px;}
+	.slide,#wrapper,#bannerSlideBox {height:420px; max-width:640px;}
+	.slide img{}*/
+}
+@media only screen and (min-width:800px){
+}
+@media only screen and (min-width:1024px){
+}
+
+#menuBox{
+	position:absolute;
+	z-index:0;
+	right:0px;
+	top:0px;
+	bottom:0px;
+	background-color:#444;
+	width:100%;
+	padding-left:20%;
+	height:100%;
+	color:#fff;
+	overflow:hidden;
+}
+#menuBoxScroller{
+	position:absolute;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	width: 100%;
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	-o-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	-o-text-size-adjust: none;
+	text-size-adjust: none;
+}
+#menuBox ul{
+	padding:10px 0px;
+	display:block;
+}
+#menuBox ul li{
+	display:block;
+	line-height:300%;
+	font-size:30px;
+	border-bottom: 1px #333 solid;
+	padding: 0px 20px;
+}
+
+
+#contentBox{
+	background-color:#fff;
+	position: relative;
+	box-shadow: 1px 0px 8px 5px #333;
+	height:100%;
+	width:100%;
+}
+#contentScrollBox{
+	position:absolute;
+	z-index: 10;
+	top: 0px;/**必須要**/
+	bottom: 0px;/**必須要**/
+	left: 0;
+	width: 100%;
+	overflow: hidden;
+	background-color: #444;
+}
+#contentBoxScroller {
+	position: absolute;
+	z-index: 11;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	width: 100%;
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	-o-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	-o-text-size-adjust: none;
+	text-size-adjust: none;
+	background-color: #fff;
+}
+
+#headBar{
+	height:80px;
+	line-height:80px;
+	border-bottom:1px #ccc solid;
+	text-align:center;
+	font-size:34px;
+	background-color:#333;
+	color:#fff;
+	position:relative;
+}
+
+
+#bannerSlideBox{
+	position:relative;
+	width:640px;
+	height: 420px;
+	overflow: hidden;
+}
+#bannerSlide1 {
+	position:absolute;
+	width:640px;
+	height: 420px;
+	z-index:20;
+}
+#scroller {
+	width:3200px;/**根據slide個數確定**/
+	position: absolute;
+	z-index: 21;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	height: auto;
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	-o-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	-o-text-size-adjust: none;
+	text-size-adjust: none;
+}
+
+.slide {
+	width:640px;
+	height: auto;
+	float: left;
+}
+.slide img{
+	width:640px;
+}
+
+#prevBt,#nextBt{
+	position:absolute;
+	display:block;
+	width:60px;
+	height:60px;
+	line-height:60px;
+	background-color:rgba(0, 0, 0, 0.60);;
+	z-index:30;
+	cursor:pointer;
+	text-align:center;
+	top:50%;
+	margin-top:-30px;
+	color:#fff;
+	font-size:30px;
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+}
+#prevBt{
+	left:0px;
+}
+#nextBt{
+	right:0px;
+}
+
+#indicator {
+	position: relative;
+	width: 150px;
+	height: 20px;
+	margin: 10px auto;
+	text-align:center;
+	display:block;
+}
+#indicator li{
+	width: 20px;
+	height: 20px;
+	border-radius: 10px;
+	background: #ccc;
+	display:block;
+	float:left;
+	margin-right:10px;
+}
+#indicator li.active{
+	background: #777;
+}
+#indicator li:last-of-type{
+	margin-right:0px;
+}
+
+
+#menuBt{
+	float:right; padding:0px 10px;
+	background-color: #0071C1;
+	color:#fff;
+}
+
+/**animation**/
+.slideRightOn{
+	transform:translate(-80%,0%);
+	-webkit-transform:translate(-80%,0%);
+	-moz-transform:translate(-80%,0%);
+	-o-transform:translate(-80%,0%);
+	
+	transition-property: transform;
+	transition-duration: 0.2s;
+	transition-timing-function: linear;
+	transition-delay: 0s;
+	/* Firefox 4 */
+	-moz-transition-property:-moz-transform;
+	-moz-transition-duration:0.2s;
+	-moz-transition-timing-function:linear;
+	-moz-transition-delay:0s;
+	/* Safari 和 Chrome */
+	-webkit-transition-property:-webkit-transform;
+	-webkit-transition-duration:0.2s;
+	-webkit-transition-timing-function:linear;
+	-webkit-transition-delay:0s;
+	/* Opera */
+	-o-transition-property:-o-transform;
+	-o-transition-duration:0.2s;
+	-o-transition-timing-function:linear;
+	-o-transition-delay:0s;
+}
+
+.slideRightOff{
+	transform:translate(0%,0%);
+	-moz-transform:translate(0%,0%);
+	-webkit-transform:translate(0%,0%);
+	-o-transform:translate(0%,0%);
+	
+	
+	
+	transition-property: transform;
+	transition-duration: 0.2s;
+	transition-timing-function: linear;
+	transition-delay: 0s;
+	/* Firefox 4 */
+	-moz-transition-property:-moz-transform;
+	-moz-transition-duration:0.2s;
+	-moz-transition-timing-function:linear;
+	-moz-transition-delay:0s;
+	/* Safari 和 Chrome */
+	-webkit-transition-property:-webkit-transform;
+	-webkit-transition-duration:0.2s;
+	-webkit-transition-timing-function:linear;
+	-webkit-transition-delay:0s;
+	/* Opera */
+	-o-transition-property:-o-transform;
+	-o-transition-duration:0.2s;
+	-o-transition-timing-function:linear;
+	-o-transition-delay:0s;
+}
+
+.rightMenuListOn{
+	transform:translate(0%,0%);
+	-moz-transform:translate(0%,0%);
+	-webkit-transform:translate(0%,0%);
+	-o-transform:translate(0%,0%);
+	
+	
+	
+	transition-property: transform;
+	transition-duration: 0.3s;
+	transition-timing-function: linear;
+	transition-delay: 0s;
+	/* Firefox 4 */
+	-moz-transition-property:-moz-transform;
+	-moz-transition-duration:0.3s;
+	-moz-transition-timing-function:linear;
+	-moz-transition-delay:0s;
+	/* Safari 和 Chrome */
+	-webkit-transition-property:-webkit-transform;
+	-webkit-transition-duration:0.3s;
+	-webkit-transition-timing-function:linear;
+	-webkit-transition-delay:0s;
+	/* Opera */
+	-o-transition-property:-o-transform;
+	-o-transition-duration:0.3s;
+	-o-transition-timing-function:linear;
+	-o-transition-delay:0s;
+}
+
+.rightMenuListOff{
+	transform:translate(20%,0%);
+	-webkit-transform:translate(20%,0%);
+	-moz-transform:translate(20%,0%);
+	-o-transform:translate(20%,0%);
+	
+	transition-property: transform;
+	transition-duration: 0.2s;
+	transition-timing-function: linear;
+	transition-delay: 0s;
+	/* Firefox 4 */
+	-moz-transition-property:-moz-transform;
+	-moz-transition-duration:0.2s;
+	-moz-transition-timing-function:linear;
+	-moz-transition-delay:0s;
+	/* Safari 和 Chrome */
+	-webkit-transition-property:-webkit-transform;
+	-webkit-transition-duration:0.2s;
+	-webkit-transition-timing-function:linear;
+	-webkit-transition-delay:0s;
+	/* Opera */
+	-o-transition-property:-o-transform;
+	-o-transition-duration:0.2s;
+	-o-transition-timing-function:linear;
+	-o-transition-delay:0s;
+}
+
+.button{
+	font-size:30px;
+	color:#fff;
+	background-color:#333;
+	padding:20px;
+}
+
+</style>
+<script src="JS_V3/prototype1.7.1.js"></script>
+<script src="JS_V3/link.js"></script>
+<script src="JS_V3/iscroll.js"></script>
+<script src="JS_V3/hammer.js"></script>
+</head>
+<body>
+<div id="body">
+
+<div id="menuBox" style="" class="rightMenuListOff">
+<div id="menuBoxScroller">
+	<ul>
+    	<li>menu 1menu menu </li>
+        <li>menu menu 1</li>
+        <li>menu menu 1</li>
+        <li>menu menu 1</li>
+        <li>menu menu 1</li>
+    	<li>menu menu 1</li>
+        <li>menu 1</li>
+        <li>menu 1</li>
+        <li>menu 1</li>
+        <li>menu 1</li>
+        <li>menu 1</li>
+        <li>menu 1</li>
+        <li>menu 2</li>
+    </ul>
+</div>
+</div>
+
+<div id="contentBox">
+<div id="contentScrollBox">
+<div id="contentBoxScroller">
+    <header id="headBar">
+            <span>ST</span><button id="menuBt">menu</button>
+    </header>
+    
+    <div id="bannerSlideBox">
+    <div id="bannerSlide1">
+        <div id="scroller" class="">
+            <div class="slide">
+                <img id="bannerImg1" src="http://webstage8.smartone.com/testing/mobile_smartone/images/home_banner_5c.png">
+            </div>
+            <div class="slide">
+                <img src="http://webstage8.smartone.com/testing/mobile_smartone/images/home_banner_5s.png">
+            </div>
+            <div class="slide">
+                <img src="http://webstage8.smartone.com/testing/mobile_smartone/images/home_banner_csm.png">
+            </div>
+            <div class="slide">
+                <img src="http://webstage8.smartone.com/testing/mobile_smartone/images/home_banner_n3.png">
+            </div>
+            <div class="slide">
+                <img src="http://webstage8.smartone.com/testing/mobile_smartone/images/home_banner_speed.png">
+            </div>
+        </div>
+    </div>
+        <span id="prevBt"> 《 </span>
+        <span id="nextBt"> 》 </span>
+        
+    </div>
+    <ul id="indicator">
+        <li class="active"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    
+    <p>hello! hello! hello! <br/>
+    <a href="st_front_desk_page2.html" class="button" id="page2">第二版link</a>
+    <br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p><p>hello! hello! hello! <br/><br/></p>
+
+</div> 
+</div>
+</div>
+
+</div>
+</body>
+<script type="text/javascript">
+
+window.onload=function(){
+	loaded();
+}
+var BannerSlideScroll,contentBoxScroll,menuBoxScroll;
+
+function loaded () {
+	BannerSlideScroll = new IScroll('#bannerSlide1', {
+		scrollX: true,
+		scrollY: false,
+		useTransform: false,
+		bounce: true,
+		momentum: false,
+		freeScroll: true,
+		snap: '.slide',
+		snapSpeed: 300,
+		keyBindings: true,
+		eventPassthrough: false,
+		preventDefault: true,
+		disableMouse: false,
+		disablePointer: true,
+		click:true
+		/*,
+		indicators: {
+			el: document.getElementById('indicator'),
+			fade: false,
+			ignoreBoundaries: false,
+			interactive: false,
+			listenX: true,
+			listenY: true,
+			resize: false,
+			shrink: false,
+			speedRatioX: 0,
+			speedRatioY: 0,
+		}*/
+	});
+	contentBoxScroll = new IScroll('#contentScrollBox',{
+		scrollX:false,
+		scrollY:true,
+		eventPassthrough: false,
+		mouseWheel:true,
+		click:true
+	});
+	menuBoxScroll = new IScroll('#menuBox',{
+		scrollX:false,
+		scrollY:true,
+		eventPassthrough: false,
+		mouseWheel:true,
+		click:true
+	});
+	
+	Hammer(document.getElementById('prevBt')).on("tap", function(){
+		BannerSlideScroll.prev(300);
+	});
+	Hammer(document.getElementById('nextBt')).on("tap", function(){
+		BannerSlideScroll.next(300);
+	});
+	
+	BannerSlideScroll.on('scrollEnd', function () {
+		/*
+		if ( this.x < -1000 ) {
+		// do something
+		}*/
+		document.querySelector('#indicator > li.active').className = '';
+		document.querySelector('#indicator > li:nth-child(' + (this.currentPage.pageX+1) + ')').className = 'active';
+	});
+
+	//setTimeout(showMenu,200);
+	//setTimeout(showMenu,1200);
+	
+}
+
+
+var isMenuOn=false;
+var contentBoxNode=document.getElementById('contentBox');
+var menuBoxNode=document.getElementById('menuBox');
+function showMenu(){
+	if(!isMenuOn){
+		contentBoxNode.className='slideRightOn';
+		menuBoxNode.className='rightMenuListOn';
+		isMenuOn=true;
+		
+	} else {
+		contentBoxNode.className='slideRightOff';
+		menuBoxNode.className='rightMenuListOff';
+		isMenuOn=false;
+		$('nextBt').setStyle('-webkit-transform: translateZ(0);');/***解決元素消失的奇怪問題，webkit 渲染bug**/
+	}
+}
+
+Hammer(menuBoxNode).on("tap", function(){
+	alert('you click me!');
+});
+
+//document.getElementById('menuBt').addEventListener('touchstart',showMenu,false);
+//document.getElementById('menuBt').addEventListener('mousedown',showMenu,false);
+Hammer(document.getElementById('menuBt')).on("tap", showMenu);
+
+
+
+function getBrowserW(){
+	return document.documentElement.clientWidth || document.body.clientWidth;//可见区域宽度
+}
+function getBrowserH(){
+	return document.documentElement.clientHeight || document.body.clientHeight;//可见区域高度		
+}
+function getEleW(ele){
+	if(typeof ele == 'string'){
+		return 	document.getElementById(ele).offsetWidth;
+	} else {
+		return ele.offsetWidth;	
+	}
+}
+function getEleH(ele){
+	if(typeof ele == 'string'){
+		return 	document.getElementById(ele).offsetHeight;
+	} else {
+		return ele.offsetHeight;	
+	}
+}
+
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+</script>
+</html>

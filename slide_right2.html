@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="MobileOptimized" content="320" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+<!--<meta name="viewport" content="width=device-width, user-scalable=no ,target-densitydpi=device-dpi ,initial-scale= 0.5"/>--><!--IOS对target-densitydpi不支持，所以我们只能设置 initial-scale=0.5 直接让iphone页面缩小一半。-->
+<!--<meta name="viewport" content="width=640, user-scalable=0"/>-->
+<meta name="description" content="" />
+<meta name="author" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="mobile-web-app-status-bar-style" content="black" />
+<meta name="apple-touch-fullscreen" content="yes"/>
+<meta name="touch-fullscreen" content="yes"/>
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="Images/apple-touch-icon-114x114-smartone.png" />
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="Images/apple-touch-icon-72x72-smartone.png" />
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="Images/apple-touch-icon-57x57-smartone.png" />
+<link rel="shortcut icon" href="Images/apple-touch-icon-smartone.png" />
+<link rel="apple-touch-startup-image" href="Images/startup.png"><!--全屏启动时候的启动画面图像, 尺寸320X460 px-->
+<title>slide right</title>
+<link rel="stylesheet" type="text/css" href="CSS_V3/animate.css">
+<style>
+*{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	outline: none;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}/***用于demo**/
+ul{list-style:none;}
+body,html{height:100%; width:100%; -webkit-overflow-scrolling: touch;}
+
+#menuBox{
+	position:fixed;
+	z-index:99999;
+	left:0px;
+	top:0px;
+	background-color:#f1f1f1;
+	width:80%;
+	height:100%;
+}
+#menuCloseBt{
+	padding:5px;
+	height:30px;
+	float:right;
+}
+#menuBox ul{
+	padding:10px;
+	padding-bottom:50px;
+	display:block;
+	height:100%;
+	overflow:auto;
+	-webkit-overflow-scrolling: touch;
+}
+#menuBox ul li{
+	display:block;
+	line-height:300%;	
+}
+
+#maskLayout{
+	height:100%;
+	width:100%;
+	background-color:rgba(20, 17, 17, 0.8);
+	position:fixed;
+	left:0px;
+	top:0px;
+	z-index:10;
+}
+
+#contentBox{
+	position:relative;
+	width:100%;
+	z-index:0;
+	left:0px;
+	top:0px;
+	background-color:#fff;
+}
+
+#headBar{
+	padding:10px;
+	border-bottom:1px #ccc solid;
+}
+
+#content{
+	padding:10px;
+}
+#version B p{
+	line-height:150%;
+} 
+#footBar{
+	padding:20px 10px;
+	border-top:1px #ccc solid;
+}
+
+/**use transition 有點卡卡的感覺**/
+.slideRightOn{
+	transform:translate(0%,0%);
+	-webkit-transform:translate(0%,0%);
+	-moz-transform:translate(0%,0%);
+	-o-transform:translate(0%,0%);
+	
+	transition-property: transform;
+	transition-duration: 0.2s;
+	transition-timing-function: linear;
+	transition-delay: 0s;
+	/* Firefox 4 */
+	-moz-transition-property:-moz-transform;
+	-moz-transition-duration:0.2s;
+	-moz-transition-timing-function:linear;
+	-moz-transition-delay:0s;
+	/* Safari 和 Chrome */
+	-webkit-transition-property:-webkit-transform;
+	-webkit-transition-duration:0.2s;
+	-webkit-transition-timing-function:linear;
+	-webkit-transition-delay:0s;
+	/* Opera */
+	-o-transition-property:-o-transform;
+	-o-transition-duration:0.2s;
+	-o-transition-timing-function:linear;
+	-o-transition-delay:0s;
+	
+	-webkit-box-shadow: 3px 5px 12px 0px #000;
+	box-shadow: 3px 5px 12px 0px #000;
+}
+
+.slideRightOff{
+	transform:translate(-100%,0%);
+	-moz-transform:translate(-100%,0%);
+	-webkit-transform:translate(-100%,0%);
+	-o-transform:translate(-100%,0%);
+	
+	
+	
+	transition-property: transform;
+	transition-duration: 0.2s;
+	transition-timing-function: linear;
+	transition-delay: 0s;
+	/* Firefox 4 */
+	-moz-transition-property:-moz-transform;
+	-moz-transition-duration:0.2s;
+	-moz-transition-timing-function:linear;
+	-moz-transition-delay:0s;
+	/* Safari 和 Chrome */
+	-webkit-transition-property:-webkit-transform;
+	-webkit-transition-duration:0.2s;
+	-webkit-transition-timing-function:linear;
+	-webkit-transition-delay:0s;
+	/* Opera */
+	-o-transition-property:-o-transform;
+	-o-transition-duration:0.2s;
+	-o-transition-timing-function:linear;
+	-o-transition-delay:0s;
+}
+
+/* Clear Fix */
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	/*display: inline-block;*/
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
+}
+
+</style>
+</head>
+
+<body id="body">
+<div id="menuBox" class="slideRightOff">
+	<div class="clearfix" style="background-color:#ccc;">
+		<button id="menuCloseBt">close</button>
+    </div>
+	<ul>
+    	<li>menu 1</li>
+        <li>menu 1</li>
+        <li>menu 1</li>
+        <li>menu 1</li>
+        <li>menu 1</li>
+    	<li>menu 1</li>
+        <li>menu 1</li>
+        <li>menu 1</li>
+        <li>menu 1</li>
+        <li>menu 1</li>
+        <li>menu 1</li>
+        <li>menu 1</li>
+        <li>menu 2</li>
+    </ul>
+</div>
+<div id="contentBox">
+	<header id="headBar">
+    	<button id="menuBt" onMouseDown="showMenu();">menu</button>
+    </header>
+    <div id="content">
+    	<p>version B version B version B version B version B content</p>
+    	<p>version B version B version B conte version B contentnt</p>
+    	<p>version B version B version B cont version B contentent</p>
+    	<p>version B version B version B cont version B contentent</p>
+    	<p>version B version B version B con version B contenttent</p>
+    	<p>version B version B version B co version B contentntent</p>
+    	<p>version B version B version B con version B contenttent</p>
+    	<p>version B version B version B co version B contentntent</p>
+    	<p>version B version B version B con version B contenttent</p>
+    	<p>version B version B version B con version B contenttent</p>
+    	<p>version B version B version B content</p>
+    	<p>version B version B version B c version B contentontent</p>
+    	<p>version B version B version B cont version B contentent</p>
+    	<p>version B version B version B co version B contentntent</p>
+    	<p>version B version B version B conte version B contentnt</p>
+    	<p>version B version B version B c version B contentontent</p>
+    	<p>version B version B version B content</p>
+    	<p>version B version B version B cont version B contentent</p>
+    	<p>version B version B version B co version B contentntent</p>
+    	<p>version B version B version B conte version B contentnt</p>
+    	<p>version B version B version B co version B contentntent</p>
+    	<p>version B version B version B conte version B contentnt</p>
+    	<p>version B version B version B co version B contentntent</p>
+    	<p>version B version B version B content</p>
+    </div>
+    <footer id="footBar">
+    	copyright 2014
+    </footer>
+</div>
+
+<div id="maskLayout" style="display:none;">
+</div>
+</body>
+<script>
+var isMenuOn=false;
+var menuBoxNode=document.getElementById('menuBox');
+var maskLayoutNode=document.getElementById('maskLayout');
+function showMenu(){
+	if(!isMenuOn){
+		menuBoxNode.className='slideRightOn';
+		//menuBoxNode.className='animated sildeLeftToRight';//需依靠animate.css
+		document.getElementById('body').style.overflow='hidden';
+		maskLayoutNode.style.display='block';
+		isMenuOn=true;
+	} else {
+		menuBoxNode.className='slideRightOff';
+		//menuBoxNode.className='animated sildeLeftToRightBack';
+		maskLayoutNode.style.display='none';
+		document.getElementById('body').style.overflow='auto';
+		isMenuOn=false;
+	}
+}
+menuBoxNode.addEventListener('mousedown',showMenu,false);
+
+maskLayoutNode.addEventListener('mousedown',showMenu,false);
+
+maskLayoutNode.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+</script>
+</html>

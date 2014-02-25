@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="MobileOptimized" content="320" />
+<meta name="viewport" content="width=640, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+<!--<meta name="viewport" content="width=device-width, user-scalable=no ,target-densitydpi=device-dpi ,initial-scale= 0.5"/>--><!--IOS对target-densitydpi不支持，所以我们只能设置 initial-scale=0.5 直接让iphone页面缩小一半。-->
+<!--<meta name="viewport" content="width=640, user-scalable=0"/>-->
+<meta name="description" content="" />
+<meta name="author" content="" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="mobile-web-app-status-bar-style" content="black" />
+<meta name="apple-touch-fullscreen" content="yes"/>
+<meta name="touch-fullscreen" content="yes"/>
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="Images/apple-touch-icon-114x114-smartone.png" />
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="Images/apple-touch-icon-72x72-smartone.png" />
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="Images/apple-touch-icon-57x57-smartone.png" />
+<link rel="shortcut icon" href="Images/apple-touch-icon-smartone.png" />
+<link rel="apple-touch-startup-image" href="Images/startup.png"><!--全屏启动时候的启动画面图像, 尺寸320X460 px-->
+<title>banner slide </title>
+
+
+<style type="text/css">
+*{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	outline: none;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}/***用于demo**/
+ul{list-style:none;}
+body,html{height:100%; width:100%; -webkit-overflow-scrolling: touch;}
+
+html {
+	/*-ms-touch-action: none;*/
+}
+
+body {
+	font-size: 12px;
+	font-family: ubuntu, helvetica, arial;
+	overflow: hidden; /* this is important to prevent the whole page to bounce */
+}
+
+#bannerSlideBox {
+	position: relative;
+	width: 640px;
+	height: 420px;
+	margin: 0 auto;
+	background: #444;
+	overflow: hidden;
+}
+#prevBt,#nextBt{
+	position:absolute;
+	display:block;
+	width:50px;
+	height:50px;
+	line-height:50px;
+	background-color:#ccc;
+	z-index:2;
+	cursor:pointer;
+	text-align:center;
+	top:50%;
+	margin-top:-15px;
+}
+#prevBt{
+	left:0px;
+}
+#nextBt{
+	right:0px;
+}
+
+#wrapper {
+	width:640px;
+	min-width:120px;
+	height: 420px;
+	margin: 0 auto;
+}
+
+#scroller {
+	position: absolute;
+	z-index: 1;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	width: 2560px;
+	height: 420px;
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	-o-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	-o-text-size-adjust: none;
+	text-size-adjust: none;
+	background-color: #444;
+}
+
+.slide {
+	width:640px;
+	min-width:120px;
+	height: 420px;
+	float: left;
+}
+@media only screen and (min-width:321px){
+}
+@media only screen and (min-width:481px){
+}
+@media only screen and (min-width:641px){
+	.slide {}
+	#scroller {}
+}
+@media only screen and (min-width:801px){
+}
+@media only screen and (min-width:1025px){
+}
+
+.slide img{
+	width:640px;
+	min-width:120px;
+}
+.painting {
+	/*width: 140px;
+	height: 200px;
+	border-radius: 10px;
+	margin: 20px auto;
+	border: 1px solid #000;
+	box-shadow:
+		inset 2px 2px 6px rgba(255,255,255,0.6),
+		inset -2px -2px 6px rgba(0,0,0,0.6),
+		0 1px 8px rgba(0,0,0,0.8);*/
+}
+
+
+#indicator {
+	position: relative;
+	width: 110px;
+	height: 20px;
+	margin: 10px auto;
+	text-align:center;
+}
+#indicator .point{
+	width: 20px;
+	height: 20px;
+	border-radius: 10px;
+	background: #ccc;
+	display:block;
+	float:left;
+	margin-right:10px;
+}
+#indicator .point:last-of-type{
+	margin-right:0px;
+}
+#dotty {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	border-radius: 10px;
+	background: #777;
+}
+
+</style>
+<script src="JS_V3/iscroll.js"></script>
+</head>
+<body onload="loaded()">
+
+<div id="bannerSlideBox">
+	<div id="wrapper">
+		<div id="scroller">
+			<div class="slide">
+				<img src="Images/b1.png">
+			</div>
+			<div class="slide">
+				<img src="Images/b2.png">
+			</div>
+			<div class="slide">
+				<img src="Images/b3.png">
+			</div>
+			<div class="slide">
+				<img src="Images/b4.png">
+			</div>
+		</div>
+	</div>
+    <span id="prevBt"> 《 </span>
+    <span id="nextBt"> 》 </span>
+</div>
+
+<div id="indicator">
+	<div id="dotty"></div>
+	<span class="point"></span>
+	<span class="point"></span>
+	<span class="point"></span>
+	<span class="point"></span>
+</div>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p><br/><br/>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p><br/><br/>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p><br/><br/>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p><br/><br/>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p><br/><br/>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p><br/><br/>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p><br/><br/>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p><br/><br/>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p><br/><br/>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p><br/><br/>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p><br/><br/>
+<p>d d df df df dfd fe fdgr4tdg rg fgdfge fsdfew f</p>
+</body>
+<script type="text/javascript">
+
+var BannerSlideScroll;
+
+function loaded () {
+	BannerSlideScroll = new IScroll('#wrapper', {
+		scrollX: true,
+		scrollY: false,
+		useTransform: false,
+		bounce: true,
+		momentum: false,
+		freeScroll: true,
+		snap: '.slide',
+		snapSpeed: 300,
+		keyBindings: false,
+		preventDefault: true,
+		indicators: {
+			el: document.getElementById('indicator'),fade: false,
+			ignoreBoundaries: false,
+			interactive: false,
+			listenX: true,
+			listenY: true,
+			resize: false,
+			shrink: false,
+			speedRatioX: 0,
+			speedRatioY: 0,
+		}
+	});
+}
+document.getElementById('prevBt').addEventListener('mousedown',function(){
+	BannerSlideScroll.prev(300);
+},false);
+document.getElementById('nextBt').addEventListener('mousedown',function(){
+	BannerSlideScroll.next(300);
+},false);
+
+
+
+//document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+</script>
+</html>

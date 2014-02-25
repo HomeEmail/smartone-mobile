@@ -1,0 +1,272 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=640, user-scalable=0"/>
+<title>circleLoading canvas</title>
+<style>
+canvas {
+    /**
+     * Set transparent to let any other canvases render through
+     */
+    background-color: transparent;
+}
+.processBox{
+	position:relative;
+	height: 160px;
+	width: 160px;
+	float:left;
+	margin:20px;
+}
+.processBox canvas{
+	position:absolute;
+}
+.process{
+	overflow:hidden;
+	transform: rotate(-90deg);
+	-webkit-transform: rotate(-90deg);
+	-moz-transform:rotate(-90deg);
+	-o-transform:rotate(-90deg);
+	-ms-transform:rotate(-90deg);
+	z-index:1;
+}
+.processText{
+	z-index:2;
+}
+</style>
+</head>
+
+<body>
+
+<div class="processBox">
+    <canvas class="process" id="circleLoading3" width="160" height="160"></canvas>
+    <canvas class="processText" id="loadingText3"  width="160" height="160">178 mins used</canvas>
+</div>
+<div class="processBox">
+    <canvas class="process" id="circleLoading1" width="160" height="160"></canvas>
+    <canvas class="processText" id="loadingText1"  width="160" height="160">0.60 GB used</canvas>
+</div>
+<div class="processBox">
+    <canvas class="process" id="circleLoading2" width="160" height="160"></canvas>
+    <canvas class="processText" id="loadingText2"  width="160" height="160">1,678 MB used</canvas>
+</div>
+
+</body>
+<script>
+/***是否是浮點類型**/
+function isFloat(val){
+	var regex = /^[+|-]?\d*\.?\d*$/; 
+	if (!regex.test(val.toString())){ 
+	 return false;     
+	}    
+	return true;
+}
+/****精確到小數點後幾位數****/
+function floatToFixed(val,n){
+	var n=Math.pow(10,n);
+	return Math.floor(val*n)/n;	
+}
+
+(function() {
+	var lastTime = 0;
+	var vendors = ['ms', 'moz', 'webkit', 'o'];
+	for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+		window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+		window.cancelAnimationFrame =
+				window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+	}
+
+	if (!window.requestAnimationFrame)
+		window.requestAnimationFrame = function(callback, element) {
+			var currTime = new Date().getTime();
+			var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+			var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+					timeToCall);
+			lastTime = currTime + timeToCall;
+			return id;
+		};
+
+	if (!window.cancelAnimationFrame)
+		window.cancelAnimationFrame = function(id) {
+			clearTimeout(id);
+		};
+}());
+
+var UsedRAM={};
+UsedRAM=function(option){
+	var dom=option.dom;//document.querySelector('#circleLoading1');
+	var textDom=option.textDom
+	var maxValue=option.maxValue||100;
+	var usedValue=option.usedValue||1;
+	var units=option.units||'';
+	var usedValueText=formatMoney(option.usedValue,false);
+	var percent=parseInt(option.usedValue/option.maxValue*100,10);
+	var aniTime=option.aniTime||500;//動畫時間單位ms
+	var curPercent=0.0;
+	var processBarColor=option.processBarColor||'';
+	var diameter=option.diameter||100;
+	var borderW=option.borderW||10;
+	if(!processBarColor){
+		if(percent>70){
+			processBarColor='#FF4302';
+		} else if(percent>30){
+			processBarColor='#FFA300';
+		} else {
+			processBarColor='#8CCB14';
+		}
+	}
+	
+	var processAni=function processAni(){
+		if(curPercent<percent){
+			//setTimeout(processAni,aniTime/33);
+			window.requestAnimationFrame(processAni);
+			
+			curPercent++;
+			drawProcess(dom,diameter,curPercent,borderW);
+			if(!isFloat(usedValueText)){
+				var processUsedValueText=parseInt(curPercent/100*maxValue,10);
+			} else {
+				var processUsedValueText=floatToFixed(curPercent/100*maxValue,2);
+			}
+			processUsedValueText=formatMoney(processUsedValueText,false);
+			drawText(textDom,diameter,processUsedValueText);
+		} else {
+			//drawProcess(dom,diameter,curPercent,borderW);	
+			drawText(textDom,diameter,usedValueText);
+		}
+		//var i=percent/aniTime;
+		//drawProcess(document.querySelector('#circleLoading1'),100,60,10,'1,358');
+	}
+	var drawText=function drawText(textDom,diameter,usedValueText){
+		//半徑
+		var radius=diameter/2;
+		var text=usedValueText;
+		// 拿到绘图上下文,目前只支持"2d"
+		var context = textDom.getContext('2d');
+		// 将绘图区域清空,如果是第一次在这个画布上画图,画布上没有东西,这步就不需要了
+		context.clearRect(0, 0, diameter, diameter);
+		//在中间写字,數字
+		context.font = "lighter 26pt Tahoma, Arial, MingLiU";
+		context.fillStyle = '#555';
+		context.textAlign = 'center';
+		context.textBaseline = 'bottom';
+		context.moveTo(radius, radius);
+		context.fillText(text, radius, radius+5);
+		
+		//單位
+		context.font = "lighter 16pt Tahoma, Arial, MingLiU";
+		context.fillStyle = '#878787';
+		context.textAlign = 'center';
+		context.textBaseline = 'top';
+		context.moveTo(radius, radius);
+		context.fillText(units, radius, radius);
+	}
+	var drawProcess=function drawProcess(dom,diameter,processValue,borderW){
+		//百分值
+		var process = processValue;
+		 
+		//半徑
+		var radius=diameter/2;
+		// 一个canvas标签
+		//var canvas = ele;
+		// 拿到绘图上下文,目前只支持"2d"
+		var context = dom.getContext('2d');
+		// 将绘图区域清空,如果是第一次在这个画布上画图,画布上没有东西,这步就不需要了
+		context.clearRect(0, 0, diameter, diameter);
+		
+		// ***开始画一个灰色的圆
+		context.beginPath();// 坐标移动到圆心
+		context.moveTo(radius, radius);
+		 // 画圆,圆心是50,50,半径50,从角度0开始,画到2PI结束,最后一个参数是方向顺时针还是逆时针
+		 //context.arc(50, 50, 50, 0, Math.PI * 2, false);
+		context.arc(radius, radius, radius, 0, Math.PI * 2, false);
+		context.closePath();
+		// 填充颜色
+		context.fillStyle = '#c3c3c3';
+		context.fill();
+		// ***灰色的圆画完
+		
+		// 画进度
+		context.beginPath();
+		// 画扇形的时候这步很重要,画笔不在圆心画出来的不是扇形
+		context.moveTo(radius, radius);
+		// 跟上面的圆唯一的区别在这里,不画满圆,画个扇形
+		context.arc(radius, radius, radius, 0, (Math.PI*2) * process / 100, false);
+		context.closePath();
+		context.fillStyle = processBarColor;
+		context.fill();
+	
+		// 画内部空白
+		context.beginPath();
+		context.moveTo(radius, radius);
+		context.arc(radius, radius, radius-borderW, 0, Math.PI * 2, true);
+		context.closePath();
+		context.fillStyle = '#f2f2f2';
+		context.fill();
+		
+		// 画一条线
+		context.beginPath();
+		context.arc(radius, radius, radius-borderW, 0, Math.PI * 2, true);
+		context.closePath();
+		// 与画实心圆的区别,fill是填充,stroke是画线
+		context.strokeStyle = '#bcbcbc';
+		context.stroke();
+		
+	}
+	
+	return {
+		init:(function(){
+			processAni();
+		})(),
+		processAni:processAni
+	}
+	
+}
+var dom1=document.getElementById('circleLoading1');
+var ram1=new UsedRAM({
+	dom:document.getElementById('circleLoading1'),
+	textDom:document.getElementById('loadingText1'),
+	diameter:160,maxValue:1.9,usedValue:0.6,units:'GB',aniTime:555,borderW:10
+});
+
+var ram2=new UsedRAM({
+	dom:document.getElementById('circleLoading2'),
+	textDom:document.getElementById('loadingText2'),
+	diameter:160,maxValue:2000,usedValue:1678,units:'MB',aniTime:555,borderW:10
+});
+
+var ram3=new UsedRAM({
+	dom:document.getElementById('circleLoading3'),
+	textDom:document.getElementById('loadingText3'),
+	diameter:160,maxValue:1000,usedValue:178,units:'mins',aniTime:555,borderW:10
+});
+
+
+/*
+ * formatMoney(s,type)
+ * 功能：金额按千位逗号分割
+ * 参数：s，需要格式化的金额数值.
+ * 参数：type,判断格式化后的金额是否需要小数位.
+ * 返回：返回格式化后的数值字符串.
+ */
+function formatMoney(s, type) {
+    if (/[^0-9\.]/.test(s)) return "0";
+    if (s == null || s == "") return "0";
+    s = s.toString().replace(/^(\d*)$/, "$1.");
+    s = (s + "00").replace(/(\d*\.\d\d)\d*/, "$1");
+    s = s.replace(".", ",");
+    var re = /(\d)(\d{3},)/;
+    while (re.test(s))
+        s = s.replace(re, "$1,$2");
+    s = s.replace(/,(\d\d)$/, ".$1");
+    if (type == 0) {// 不带小数位(默认是有小数位)
+        var a = s.split(".");
+        if (a[1] == "00") {
+            s = a[0];
+        }
+    }
+    return s;
+}
+
+</script>
+</html>
